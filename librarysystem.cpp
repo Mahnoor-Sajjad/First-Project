@@ -11,7 +11,7 @@ protected:
     };
     vector<BOOK> book;
     int num, userID, count;
-    string name , search;
+    string name, search;
 
 public:
     USER() { count = 0; }
@@ -23,12 +23,27 @@ public:
         cout << "User ID : ";
         cin >> userID;
     }
-    // void Search_Book()
-    // {    // books should be sorted acc to the title so it's easy to search by name
-    //     cout << "Enter the title of the book to search for it: \n";
-    //     getline(cin, search);
-
-    // }
+    void Search_Book()
+    { // books should be sorted acc to the title so it's easy to search by name
+        cout << "Enter the title of the book to search for it : ";
+        cin.ignore();
+        getline(cin, search);
+        bool found = false;
+        for (int i = 0; i <  book.size(); i++)
+        {
+            if (search == book[i].title)
+            {
+                cout << "Book found!\n" << endl;
+                cout << "Title : " << book[i].title << endl;
+                cout << "Author : " << book[i].author << endl;
+                cout << "ISBN : " << book[i].ISBN << endl;
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+          cout << "Book not found!\n";
+    }
 };
 
 class LIBRARIAN : public USER
@@ -37,7 +52,6 @@ public:
     void menu();
     void add_Book();
     void delete_Book();
-    void Search_Book();
     void Book_issue();
     void display_Books();
 };
@@ -47,8 +61,8 @@ void LIBRARIAN::menu()
     {
         cout << "1.Add a Book" << endl
              << "2.Delete a Book" << endl
-             << "3.Search a book" << endl
-             << "4." << endl;
+             << "3.Search a Book" << endl
+             << "4.Issue a Book" << endl;
         cout << "5.Display all Books" << endl
              << "6.Exit" << endl;
         cout << "Enter Your choice : ";
@@ -62,8 +76,7 @@ void LIBRARIAN::menu()
             delete_Book();
             break;
         case 3:
-          //  Search_Book();
-            cout << "Searching section";
+            Search_Book();
             break;
         case 4:
             Book_issue();
@@ -97,12 +110,27 @@ void LIBRARIAN::add_Book()
 
         book.push_back(book_obj);
         count++;
+        cout << "\nBook added successfully!" << endl;
     }
 }
 
 void LIBRARIAN::delete_Book()
 {
-    cout << "For deleting a book, enter : ";
+    cout << "For deleting a book, enter title of the book : ";
+    cin.ignore();
+    getline(cin, search);
+    bool found = false;
+    for (int i = 0; i < book.size(); i++)
+    {
+        if (search == book[i].title)
+        {
+            book.erase(book.begin()+i);
+            cout << "\nBook deleted successfully!";
+            found = true; break;
+        }
+    }   
+        if  (!found)
+            cout << "\nBook not found!" << endl; 
 }
 
 void LIBRARIAN::Book_issue()
@@ -116,10 +144,10 @@ void LIBRARIAN::display_Books()
 
     for (int i = 0; i < book.size(); i++)
     {
-        cout << "Book " << i + 1 << "details: \n";
+        cout << "\nBook " << i + 1 << " details: \n";
         cout << "Title : " << book[i].title << endl
              << "Author : " << book[i].author << endl
-             << "ISBN : " << book[i].ISBN << endl;
+             << "ISBN : " << book[i].ISBN << endl << endl;
     }
 }
 
