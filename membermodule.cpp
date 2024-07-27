@@ -11,7 +11,7 @@ protected:
         bool issued = false;
     };
     int num, userID;
-    string name;
+    string name, search;
     vector<BOOK> book;
 
 public:
@@ -22,6 +22,27 @@ public:
         getline(cin, name);
         cout << "User ID : ";
         cin >> userID;
+    }
+    void Search_Book()
+    { 
+        cout << "Enter the title of the book to search for it : ";
+        cin.ignore();
+        getline(cin, search);
+        bool found = false;
+        for (int i = 0; i <  book.size(); i++)
+        {
+            if (search == book[i].title)
+            {
+                cout << "Book found!\n" << endl;
+                cout << "Title : " << book[i].title << endl;
+                cout << "Author : " << book[i].author << endl;
+                cout << "ISBN : " << book[i].ISBN << endl;
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+          cout << "Book not found!\n";
     }
 };
 class MEMBER : public USER
